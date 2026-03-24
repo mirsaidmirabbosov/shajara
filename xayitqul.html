@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <title>Xayitqul - Tarixshunos</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        background: #f9f9f9;
+        color: #202122;
+        margin: 0;
+        padding: 0;
+      }
+
+      header,
+      nav,
+      main {
+        max-width: 1000px;
+        margin: auto;
+        padding: 1rem;
+      }
+
+      h1 {
+        border-bottom: 1px solid #aaa;
+      }
+
+      .infobox {
+        float: right;
+        width: 280px;
+        background: #f8f9fa;
+        border: 1px solid #aaa;
+        padding: 0.5rem;
+        font-size: 14px;
+      }
+
+      .infobox img {
+        max-width: 100%;
+      }
+
+      .infobox-title {
+        background: #cedff2;
+        padding: 4px;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .section {
+        margin-top: 1.5rem;
+      }
+
+      .toc {
+        border: 1px solid #ccc;
+        padding: 0.5rem;
+        background: #f6f6f6;
+        margin-top: 1rem;
+      }
+
+      .toc ul {
+        list-style: none;
+        padding-left: 1rem;
+      }
+
+      .toc li {
+        margin-bottom: 0.2rem;
+      }
+
+      footer {
+        margin-top: 2rem;
+        text-align: center;
+        font-size: 0.8rem;
+        color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Xayitqul</h1>
+      <p><i>Sovet fuqarosi</i></p>
+      <form id="searchForm">
+        <input type="text" id="searchInput" placeholder="Ismni kiriting..." />
+        <button type="submit">Qidirish</button>
+      </form>
+    </header>
+
+    <main>
+      <div class="infobox">
+        <div class="infobox-title">Xayitqul<br /><small>Xayitqul</small></div>
+        <img src="./img/question.jpg" alt="Xayitqul" />
+        <p style="text-align: center">Xayitqul</p>
+        <hr />
+        <p><strong>Tug'ildi:</strong><br /></p>
+        <p><strong>Vafoti:</strong><br /></p>
+        <p><strong>Otasi:</strong> <a href="./polat.html">Po'lat</a></p>
+        <p><strong>Onasi:</strong> <a href=""></a></p>
+        <p><strong>Ayoli:</strong> <a href=""></a></p>
+        <p>
+          <strong>Farzandlari:</strong>
+          <button class="btn"><a href="./ergashali.html">Ergashali</a></button>
+        </p>
+      </div>
+
+      <div class="toc">
+        <strong>Tarkib</strong>
+        <ul>
+          <li>1 Hayoti</li>
+          <li>2 Oilasi</li>
+        </ul>
+      </div>
+      <div class="section">
+        <h2>Hayoti</h2>
+        <p></p>
+      </div>
+
+      <div class="section">
+        <h2>Oilasi</h2>
+        <p>Farzandlar ta.</p>
+      </div>
+    </main>
+
+    <footer>
+      <p>Bu vikipediyani ko'chirish taqiqlandi by Mirsaid.</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
