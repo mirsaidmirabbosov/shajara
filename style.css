@@ -1,0 +1,373 @@
+.bab {
+  margin-left: -50px;
+}
+/* 
+  Project: CSS Glowing Button
+  Created: Sunday, 06 March 2022
+  Author: Jamshid Elmi 
+  Tutorial: https://youtu.be/b_8fHNIHFk4
+*/
+
+/* button */
+.btn {
+  padding: 15px 40px;
+  border: none;
+  outline: none;
+  color: #fff;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 12px;
+}
+.btn::after {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #f8f8f8;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+/* glow */
+.btn::before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #ff00c8,
+    #ff0000
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 600%;
+  z-index: -1;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  filter: blur(8px);
+  animation: glowing 20s linear infinite;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+  opacity: 0;
+}
+
+@keyframes glowing {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+/* hover */
+.btn:hover::before {
+  opacity: 1;
+}
+
+.btn:active:after {
+  background: transparent;
+}
+
+.btn:active {
+  color: #000;
+  font-weight: bold;
+}
+body {
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  line-height: 1.6;
+}
+@media (max-width: 768px) {
+  .infobox {
+    float: none;
+    width: 100%;
+    margin: 1rem 0;
+  }
+}
+
+/* Qidiruv formasini sozlash */
+#searchForm {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Input maydoni */
+#searchInput {
+  padding: 0.5rem 1rem;
+  font-size: 16px;
+  border: 1px solid #aaa;
+  border-radius: 25px;
+  width: 250px;
+  transition: all 0.3s ease;
+}
+
+#searchInput:focus {
+  border-color: #36c;
+  outline: none;
+  box-shadow: 0 0 5px rgba(51, 102, 204, 0.4);
+}
+
+/* Qidirish tugmasi */
+#searchForm button {
+  padding: 0.5rem 1rem;
+  background-color: #3366cc;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#searchForm button:hover {
+  background-color: #254a9b;
+}
+
+/* 
+DDAAAAAAAAAAAAA */
+
+/* Reset and base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f2f5f9;
+  color: #222;
+  line-height: 1.6;
+}
+
+/* Layout */
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  background: linear-gradient(to bottom, #0055aa, #003366);
+  color: white;
+  padding: 30px 20px;
+}
+
+.sidebar h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  margin: 12px 0;
+}
+
+.sidebar a {
+  color: #e0e0e0;
+  text-decoration: none;
+  font-weight: 500;
+  display: block;
+  transition: 0.2s;
+}
+
+.sidebar a:hover {
+  color: #ffffff;
+  transform: translateX(5px);
+}
+
+/* Main Content */
+.content {
+  flex: 1;
+  padding: 40px;
+  background-color: #f9fbfc;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.header h1 {
+  font-size: 28px;
+  color: #003366;
+}
+
+/* Search form */
+#searchInput {
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 250px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+#searchInput:focus {
+  border-color: #0055aa;
+}
+
+button {
+  padding: 10px 16px;
+  background: linear-gradient(90deg, #0055aa, #0077cc);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #004080, #0066aa);
+}
+
+/* Section styles */
+.recommended h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #003366;
+}
+
+/* Profile Cards Grid */
+.profile-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+/* Individual Profile Card */
+.profile-card {
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.profile-card:hover {
+  transform: translateY(-8px);
+}
+
+.profile-card img {
+  width: 100%;
+  height: 4%;
+  object-fit: cover;
+}
+
+.profile-card h4 {
+  font-size: 20px;
+  color: #222;
+  margin-top: 12px;
+}
+
+.profile-card p {
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+.profile-card a {
+  display: block;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    text-align: center;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profile-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* login */
+
+.login-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #0055aa, #003366);
+  color: #fff;
+}
+
+.login-container {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  color: #000;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-container input,
+.login-container select {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.login-container button {
+  background: #0055aa;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.login-container button:hover {
+  background: #003366;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* baaa */
