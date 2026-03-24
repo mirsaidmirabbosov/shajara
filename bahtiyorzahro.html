@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <title>Bahtiyor</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        background: #f9f9f9;
+        color: #202122;
+        margin: 0;
+        padding: 0;
+      }
+      .lang-switch {
+        text-align: right;
+        margin-bottom: 0.5rem;
+      }
+      .lang-switch button {
+        margin-left: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+
+      header,
+      nav,
+      main {
+        max-width: 1000px;
+        margin: auto;
+        padding: 1rem;
+      }
+
+      h1 {
+        border-bottom: 1px solid #aaa;
+      }
+
+      .infobox {
+        float: right;
+        width: 280px;
+        background: #f8f9fa;
+        border: 1px solid #aaa;
+        padding: 0.5rem;
+        font-size: 14px;
+      }
+
+      .infobox img {
+        max-width: 100%;
+      }
+
+      .infobox-title {
+        background: #cedff2;
+        padding: 4px;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .section {
+        margin-top: 1.5rem;
+      }
+
+      .toc {
+        border: 1px solid #ccc;
+        padding: 0.5rem;
+        background: #f6f6f6;
+        margin-top: 1rem;
+      }
+
+      .toc ul {
+        list-style: none;
+        padding-left: 1rem;
+      }
+
+      .toc li {
+        margin-bottom: 0.2rem;
+      }
+
+      footer {
+        margin-top: 2rem;
+        text-align: center;
+        font-size: 0.8rem;
+        color: #555;
+      }
+
+      .comment-container {
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 700px;
+        padding: 25px;
+
+        /* Qo‘shimcha markazlashtirish */
+        margin: 50px auto; /* o‘rtaga keltiradi */
+      }
+
+      .comment-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .comment-form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .comment-form input,
+      .comment-form textarea {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+      }
+
+      .comment-form button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s ease;
+      }
+
+      .comment-form button:hover {
+        background-color: #2c80b4;
+      }
+
+      .comment {
+        background-color: #f9fafb;
+        border-left: 4px solid #3498db;
+        padding: 12px 16px;
+        border-radius: 8px;
+        margin-top: 15px;
+        position: relative;
+      }
+
+      .comment .meta {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 6px;
+      }
+
+      .comment .actions {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+
+      .comment .actions button {
+        background: none;
+        border: none;
+        color: #3498db;
+        cursor: pointer;
+        margin-left: 8px;
+      }
+
+      .comment .actions button:hover {
+        color: #e74c3c;
+      }
+
+      @media (max-width: 600px) {
+        .comment-container {
+          padding: 15px;
+        }
+      }
+
+      #sticker-panel {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #f4f6f9;
+        margin-bottom: 10px;
+        font-size: 24px;
+      }
+      #sticker-panel span {
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+      #sticker-panel span:hover {
+        transform: scale(1.5) rotate(5deg);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Bahtiyor</h1>
+      <p><i>Fuqaro</i></p>
+      <form id="searchForm">
+        <input type="text" id="searchInput" placeholder="Ismni kiriting..." />
+        <button type="submit">Qidirish</button>
+      </form>
+    </header>
+
+    <!-- Interaktiv Shajara Xarita Tugmasi -->
+    <div style="text-align: center; margin: 2rem 0">
+      <button
+        id="openMap"
+        style="padding: 10px 20px; font-size: 18px; cursor: pointer"
+      >
+        🗺️ Interaktiv shajara xaritasi (Zoom bilan)
+      </button>
+    </div>
+
+    <!-- Modal oynasi -->
+    <div
+      id="mapModal"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <div
+        style="
+          background: white;
+          padding: 20px;
+          border-radius: 12px;
+          width: 90%;
+          max-width: 1000px;
+          height: 80%;
+          position: relative;
+        "
+      >
+        <button
+          onclick="document.getElementById('mapModal').style.display='none'"
+          style="
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+          "
+        >
+          ❌
+        </button>
+        <h2 style="text-align: center">Shajara xaritasi</h2>
+        <iframe
+          src="shajara.html"
+          width="100%"
+          height="90%"
+          style="border: none"
+        ></iframe>
+      </div>
+    </div>
+
+    <main>
+      <div class="infobox">
+        <div class="infobox-title">
+        Bahtiyor<br /><small>Bahtiyor</small>
+        </div>
+        <img src="./img/question.jpg" alt="Bahtiyor" />
+        <p style="text-align: center">Bahtiyor</p>
+        <hr />
+        <p><strong>Tug'ildi:</strong><br />1964</p>
+        <p><strong>Otasi:</strong> <a href=""></a></p>
+        <p><strong>Onasi:</strong> <a href="./mafurabahtiyor.html">Ma'fura</a></p>
+        <p><strong>Turmush o'rtog'i:</strong> <a href="./zahro.html">Surayyo</a></p>
+        <p>
+          <strong>Farzandlari:</strong>
+          <button class="btn"><a href="./manzura.html">Manzura</a></button>
+          <br />
+          <button class="btn"><a href="./malika.html">Malika</a> <br /></button>
+          
+        </p>
+    
+      </div>
+
+      <div class="toc">
+        <strong>Tarkib</strong>
+        <ul>
+          <li>1 Hayoti</li>
+          <li>2 Oilasi</li>
+        </ul>
+      </div>
+      <div class="section">
+        <h2>Hayoti</h2>
+       
+
+      <div class="section">
+        <h2>Oilasi</h2>
+        <p>Farzandlar  ta.</p>
+      </div>
+
+
+      
+    </main>
+
+    <footer>
+      <p>Bu vikipediyani ko'chirish taqiqlandi by Mirsaid.</p>
+    </footer>
+
+    <div style="margin-top: 400px;" class="comment-container">
+      <h2>Fikr qoldiring</h2>
+      <form class="comment-form" id="commentForm">
+        <input type="text" id="name" placeholder="Ismingiz" required />
+        <textarea
+          id="message"
+          placeholder="Kommentariya yozing..."
+          required
+        ></textarea>
+        <button type="submit">Yuborish</button>
+      </form>
+      <div id="commentsList"></div>
+    </div>
+
+    <div id="sticker-panel">
+      <!-- Yuz ifodalari -->
+      <span>😊</span> <span>😂</span> <span>😍</span> <span>😎</span>
+      <span>🤔</span> <span>😢</span> <span>🤯</span> <span>🙃</span>
+      <span>🥳</span> <span>😇</span> <span>😴</span> <span>😡</span>
+
+      <!-- Qo‘l ishoralari -->
+      <span>👍</span> <span>👎</span> <span>👏</span> <span>🙌</span>
+      <span>✌️</span> <span>🤞</span> <span>🤟</span> <span>👋</span>
+
+      <!-- Yuraklar -->
+      <span>❤️</span> <span>💙</span> <span>💚</span> <span>💛</span>
+      <span>💜</span> <span>💖</span> <span>💔</span> <span>💘</span>
+
+      <!-- Trend -->
+      <span>💯</span> <span>🔥</span> <span>🚀</span> <span>🎯</span>
+      <span>👑</span> <span>🧠</span> <span>🤑</span> <span>🤓</span>
+
+      <!-- Ovqat -->
+      <span>🍕</span> <span>🍔</span> <span>🍟</span> <span>🍣</span>
+      <span>🍰</span> <span>🍩</span> <span>🍎</span> <span>🍉</span>
+
+      <!-- Tabiat -->
+      <span>☀️</span> <span>🌙</span> <span>⭐</span> <span>🌧️</span>
+      <span>❄️</span> <span>🌈</span> <span>🌸</span> <span>🍁</span>
+
+      <!-- Hayvonlar -->
+      <span>🐶</span> <span>🐱</span> <span>🐭</span> <span>🐰</span>
+      <span>🐻</span> <span>🐼</span> <span>🐷</span> <span>🐸</span>
+
+      <!-- Stickerlar: Trend, Ovqat, Tabiat, Hayvonlar, Milliy, Emotion, Sport, Texnologiya, Transport -->
+
+      <span>💯</span> <span>🔥</span> <span>🚀</span> <span>🎯</span>
+      <span>👑</span> <span>🧠</span> <span>🤑</span> <span>🤓</span>
+
+      <!-- Ovqat -->
+      <span>🍕</span> <span>🍔</span> <span>🍟</span> <span>🍣</span>
+      <span>🍰</span> <span>🍩</span> <span>🍎</span> <span>🍉</span>
+
+      <!-- Tabiat -->
+      <span>☀️</span> <span>🌙</span> <span>⭐</span> <span>🌧️</span>
+      <span>❄️</span> <span>🌈</span> <span>🌸</span> <span>🍁</span>
+
+      <!-- Hayvonlar -->
+      <span>🐶</span> <span>🐱</span> <span>🐭</span> <span>🐰</span>
+      <span>🐻</span> <span>🐼</span> <span>🐷</span> <span>🐸</span>
+
+      <!-- O‘zbekcha milliy -->
+      <span>🇺🇿</span> <span>🧕</span> <span>👳‍♂️</span> <span>🛕</span>
+      <span>🥟</span> <span>🍢</span> <span>🧂</span> <span>🧥</span>
+
+      <!-- Kayfiyat / Emotion -->
+      <span>😂</span> <span>😭</span> <span>😡</span> <span>😍</span>
+      <span>😴</span> <span>😎</span> <span>😱</span> <span>🤔</span>
+
+      <!-- Sport va Faollik -->
+      <span>⚽</span> <span>🏀</span> <span>🏋️</span> <span>🏃‍♂️</span>
+      <span>🚴</span> <span>🤾</span> <span>🎯</span> <span>🏆</span>
+
+      <!-- Texnologiya -->
+      <span>💻</span> <span>📱</span> <span>🖱️</span> <span>🎮</span>
+      <span>📷</span> <span>🔋</span> <span>🔌</span> <span>📡</span>
+
+      <!-- Transport -->
+      <span>🚗</span> <span>🚌</span> <span>🚜</span> <span>✈️</span>
+      <span>🚀</span> <span>🚲</span> <span>🚤</span> <span>🚦</span>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Asosiy Sahifa - Oilaviy Vikipediya</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <h2>📁 Sahifalar</h2>
+        <ul>
+          <li><a href="asosiy.html">🏠 Asosiy sahifa</a></li>
+          <li><a href="mirabbos.html">Mirabbos</a></li>
+          <li><a href="nafisa.html">Nafisa</a></li>
+          <li><a href="miraziz.html">Miraziz</a></li>
+          <li><a href="zahro.html">Zahro</a></li>
+          <li><a href="mirtoxir.html">Mirtoxir</a></li>
+          <li><a href="jahongir.html">Jahongir</a></li>
+          <li><a href="mirjalol.html">Mirjalol</a></li>
+          <a href="https://oilaviy-vikipediya-3v0on2n.gamma.site/"
+            >Oilaviy vikipedya haqida ma'lumot</a
+          >
+        </ul>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="content">
+        <header class="header">
+          <h1>Oilaviy Vikipediya</h1>
+          <div class="user-info">
+            <span id="userName">Foydalanuvchi</span>
+            <button onclick="logout()">🚪 Chiqish</button>
+          </div>
+          <form id="searchForm">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Ismni kiriting (masalan: mirabbos)"
+            />
+            <button type="submit">🔍 Qidirish</button>
+          </form>
+        </header>
+
+        <section>
+          <h2>Xush kelibsiz!</h2>
+          <p>
+            Bu sahifada oilangiz tarixiga oid shaxslar haqida ma'lumot topasiz.
+          </p>
+          <p>Chap tarafdagi menyudan sahifani tanlang yoki yuqoridan izlang.</p>
+        </section>
+
+        <!-- Recommended Profiles Section -->
+        <section class="recommended">
+          <h3>Tavsiya etilgan profillar</h3>
+          <div class="profile-cards">
+            <div class="profile-card">
+              <a href="mirabbos.html">
+                <img src="img/mirabbosota.jpg" alt="Mirabbos" />
+                <h4>Mirabbos</h4>
+                <p>Tarixshunos, 1939-2024</p>
+              </a>
+            </div>
+            <div class="profile-card">
+              <a href="nafisa.html">
+                <img src="img/nafisa.jpg" alt="Nafisa" />
+                <h4>Nafisa</h4>
+                <p>Shifokor, 1944</p>
+              </a>
+            </div>
+            <div class="profile-card">
+              <a href="miraziz.html">
+                <img src="img/miraziz.jpg" alt="Miraziz" />
+                <h4>Miraziz</h4>
+                <p>Fuqaro, 1964</p>
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      document
+        .getElementById("searchForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const name = document
+            .getElementById("searchInput")
+            .value.trim()
+            .toLowerCase();
+          if (name) {
+            window.location.href = name + ".html";
+          }
+        });
+
+      // Foydalanuvchini yuklash
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user) {
+        window.location.href = "index.html";
+      } else {
+        document.getElementById("userName").textContent =
+          user.name + " (" + user.role + ")";
+      }
+
+      // Qidiruv formasi
+      document
+        .getElementById("searchForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const name = document
+            .getElementById("searchInput")
+            .value.trim()
+            .toLowerCase();
+          if (name) {
+            window.location.href = name + ".html";
+          }
+        });
+
+      // Chiqish
+      function logout() {
+        localStorage.removeItem("user");
+        window.location.href = "index.html";
+      }
+    </script>
+
+    <script src="auth.js"></script>
+  </body>
+</html>

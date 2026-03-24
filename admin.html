@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Panel - Ro‘yxatdan o‘tish va Kirish</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f0f4ff;
+        margin: 0;
+        padding: 0;
+        color: #222;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      header {
+        background-color: #254a9b;
+        color: white;
+        padding: 1.5rem 1rem;
+        text-align: center;
+        font-size: 1.8rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+      }
+      main {
+        flex-grow: 1;
+        max-width: 480px;
+        margin: 2rem auto;
+        background: white;
+        padding: 2rem 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+      nav {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+        gap: 1rem;
+      }
+      nav button {
+        flex: 1;
+        padding: 0.7rem 0;
+        font-size: 1rem;
+        border-radius: 30px;
+        border: 2px solid #254a9b;
+        background-color: white;
+        color: #254a9b;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        user-select: none;
+      }
+      nav button.active,
+      nav button:hover {
+        background-color: #254a9b;
+        color: white;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+      }
+      input[type="text"],
+      input[type="password"] {
+        padding: 0.9rem 1.2rem;
+        font-size: 1rem;
+        border-radius: 30px;
+        border: 1.8px solid #ccc;
+        transition: border-color 0.3s ease;
+        outline: none;
+        font-family: inherit;
+      }
+      input[type="text"]:focus,
+      input[type="password"]:focus {
+        border-color: #254a9b;
+        box-shadow: 0 0 8px rgba(37, 74, 155, 0.4);
+      }
+      button[type="submit"] {
+        padding: 0.9rem 1rem;
+        font-size: 1.1rem;
+        border-radius: 30px;
+        border: none;
+        background-color: #254a9b;
+        color: white;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      button[type="submit"]:hover {
+        background-color: #19376d;
+      }
+      .hidden {
+        display: none;
+      }
+      #welcomeMessage {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 1.25rem;
+        color: #2e7d32;
+        font-weight: 600;
+      }
+      #userList {
+        max-height: 240px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 1rem;
+        background-color: #f9f9f9;
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+      #userList strong {
+        color: #254a9b;
+      }
+      #logoutBtn {
+        margin-top: 2rem;
+        width: 100%;
+        background-color: #c62828;
+        border: none;
+        color: white;
+        padding: 0.8rem 1rem;
+        font-size: 1.1rem;
+        border-radius: 30px;
+        cursor: pointer;
+        font-weight: 700;
+        transition: background-color 0.3s ease;
+      }
+      #logoutBtn:hover {
+        background-color: #8b1a1a;
+      }
+      @media (max-width: 520px) {
+        main {
+          margin: 1rem;
+          padding: 1.5rem 1.8rem;
+        }
+        nav {
+          flex-direction: column;
+          gap: 0.7rem;
+        }
+        nav button {
+          flex: none;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>Admin Panel: Ro‘yxatdan o‘tish & Kirish</header>
+
+    <main>
+      <nav>
+        <button id="btnLogin" class="active">Kirish</button>
+        <button id="btnRegister">Ro‘yxatdan o‘tish</button>
+        <button id="btnAdminPanel" class="hidden">Admin Panel</button>
+      </nav>
+
+      <!-- Kirish formasi -->
+      <section id="loginSection">
+        <form id="loginForm">
+          <input
+            type="text"
+            id="loginUsername"
+            placeholder="Login"
+            required
+            autocomplete="username"
+          />
+          <input
+            type="password"
+            id="loginPassword"
+            placeholder="Parol"
+            required
+            autocomplete="current-password"
+          />
+          <button type="submit">Kirish</button>
+        </form>
+      </section>
+
+      <!-- Ro‘yxatdan o‘tish formasi -->
+      <section id="registerSection" class="hidden">
+        <form id="registerForm">
+          <input
+            type="text"
+            id="registerName"
+            placeholder="Ism"
+            required
+            autocomplete="name"
+          />
+          <input
+            type="text"
+            id="registerUsername"
+            placeholder="Login"
+            required
+            autocomplete="username"
+          />
+          <input
+            type="password"
+            id="registerPassword"
+            placeholder="Parol"
+            required
+            autocomplete="new-password"
+          />
+          <input
+            type="password"
+            id="registerPasswordConfirm"
+            placeholder="Parolni tasdiqlang"
+            required
+            autocomplete="new-password"
+          />
+          <button type="submit">Ro‘yxatdan o‘tish</button>
+        </form>
+      </section>
+
+      <!-- Admin panel asosiy qismi -->
+      <section id="adminPanelSection" class="hidden">
+        <div id="welcomeMessage"></div>
+        <div>
+          <h3>Ro‘yxatdan o‘tgan foydalanuvchilar:</h3>
+          <div id="userList"></div>
+        </div>
+        <button id="logoutBtn">Chiqish</button>
+      </section>
+    </main>
+
+    <script>
+      const usersKey = "adminUsers";
+      const loggedInUserKey = "loggedInAdmin";
+
+      // Elementlarni olish
+      const btnLogin = document.getElementById("btnLogin");
+      const btnRegister = document.getElementById("btnRegister");
+      const btnAdminPanel = document.getElementById("btnAdminPanel");
+
+      const loginSection = document.getElementById("loginSection");
+      const registerSection = document.getElementById("registerSection");
+      const adminPanelSection = document.getElementById("adminPanelSection");
+
+      const loginForm = document.getElementById("loginForm");
+      const registerForm = document.getElementById("registerForm");
+
+      const welcomeMessage = document.getElementById("welcomeMessage");
+      const userList = document.getElementById("userList");
+      const logoutBtn = document.getElementById("logoutBtn");
+
+      // Foydalanuvchilarni localStorage'dan olish
+      function getUsers() {
+        return JSON.parse(localStorage.getItem(usersKey) || "[]");
+      }
+
+      // Foydalanuvchilarni localStorage'ga yozish
+      function setUsers(users) {
+        localStorage.setItem(usersKey, JSON.stringify(users));
+      }
+
+      // Sahifadagi ko‘rinishlarni boshqarish
+      function showSection(section) {
+        loginSection.classList.add("hidden");
+        registerSection.classList.add("hidden");
+        adminPanelSection.classList.add("hidden");
+        btnLogin.classList.remove("active");
+        btnRegister.classList.remove("active");
+        btnAdminPanel.classList.remove("active");
+
+        switch (section) {
+          case "login":
+            loginSection.classList.remove("hidden");
+            btnLogin.classList.add("active");
+            break;
+          case "register":
+            registerSection.classList.remove("hidden");
+            btnRegister.classList.add("active");
+            break;
+          case "adminPanel":
+            adminPanelSection.classList.remove("hidden");
+            btnAdminPanel.classList.add("active");
+            break;
+        }
+      }
+
+      // Ro‘yxatdan o‘tish
+      registerForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = document.getElementById("registerName").value.trim();
+        const username = document
+          .getElementById("registerUsername")
+          .value.trim();
+        const password = document.getElementById("registerPassword").value;
+        const passwordConfirm = document.getElementById(
+          "registerPasswordConfirm"
+        ).value;
+
+        if (password !== passwordConfirm) {
+          alert("Parollar mos kelmadi!");
+          return;
+        }
+        if (password.length < 4) {
+          alert("Parol kamida 4 ta belgidan iborat bo‘lishi kerak!");
+          return;
+        }
+
+        let users = getUsers();
+        if (
+          users.some((u) => u.username.toLowerCase() === username.toLowerCase())
+        ) {
+          alert("Bu login allaqachon ro‘yxatdan o‘tgan!");
+          return;
+        }
+
+        users.push({ name, username, password });
+        setUsers(users);
+
+        alert(
+          "Ro‘yxatdan o‘tish muvaffaqiyatli yakunlandi! Endi tizimga kiring."
+        );
+        registerForm.reset();
+        showSection("login");
+      });
+
+      // Kirish
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const username = document.getElementById("loginUsername").value.trim();
+        const password = document.getElementById("loginPassword").value;
+
+        const users = getUsers();
+        const user = users.find(
+          (u) =>
+            u.username.toLowerCase() === username.toLowerCase() &&
+            u.password === password
+        );
+
+        if (user) {
+          localStorage.setItem(loggedInUserKey, JSON.stringify(user));
+          renderAdminPanel(user);
+          showSection("adminPanel");
+        } else {
+          alert("Login yoki parol noto‘g‘ri!");
+        }
+      });
+
+      // Admin panel uchun foydalanuvchilar ro‘yxatini ko‘rsatish
+      function renderUserList() {
+        const users = getUsers();
+        if (users.length === 0) {
+          userList.innerHTML =
+            "<i>Hali hech qanday foydalanuvchi ro‘yxatdan o‘tmagan.</i>";
+          return;
+        }
+        let html = "<ul>";
+        users.forEach((u) => {
+          html += `<li><strong>${u.name}</strong> (Login: ${u.username})</li>`;
+        });
+        html += "</ul>";
+        userList.innerHTML = html;
+      }
+
+      // Admin panelni ko‘rsatish
+      function renderAdminPanel(user) {
+        welcomeMessage.textContent = `Xush kelibsiz, ${user.name}!`;
+        renderUserList();
+      }
+
+      // Chiqish funksiyasi
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem(loggedInUserKey);
+        showSection("login");
+      });
+
+      // Tugmalar yordamida sahifani almashtirish
+      btnLogin.addEventListener("click", () => showSection("login"));
+      btnRegister.addEventListener("click", () => showSection("register"));
+      btnAdminPanel.addEventListener("click", () => {
+        const loggedInUser = JSON.parse(localStorage.getItem(loggedInUserKey));
+        if (loggedInUser) {
+          renderAdminPanel(loggedInUser);
+          showSection("adminPanel");
+        } else {
+          alert("Avval tizimga kiring.");
+          showSection("login");
+        }
+      });
+
+      // Sahifa yuklanganda kirilgan foydalanuvchi bo‘lsa admin panelni ko‘rsatish
+      window.onload = () => {
+        const loggedInUser = JSON.parse(localStorage.getItem(loggedInUserKey));
+        if (loggedInUser) {
+          renderAdminPanel(loggedInUser);
+          showSection("adminPanel");
+        } else {
+          showSection("login");
+        }
+      };
+    </script>
+  </body>
+</html>

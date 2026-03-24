@@ -1,0 +1,234 @@
+<!-- <!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oilaviy Vikipediya - Asosiy Sahifa</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/familytreejs@6/familytree.min.js"></script>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f4f6f8;
+        margin: 0;
+        padding: 0;
+        color: #202122;
+      }
+
+      header {
+        background-color: #3366cc;
+        color: white;
+        padding: 2rem 1rem;
+        text-align: center;
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 2.5rem;
+      }
+
+      #searchForm {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      #searchInput {
+        padding: 0.6rem 1rem;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 25px;
+        width: 250px;
+        transition: 0.3s;
+      }
+
+      #searchInput:focus {
+        outline: none;
+        border-color: #3366cc;
+        box-shadow: 0 0 5px rgba(51, 102, 204, 0.4);
+      }
+
+      #searchForm button,
+      .admin-link {
+        padding: 0.6rem 1.2rem;
+        background-color: #254a9b;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      #searchForm button:hover,
+      .admin-link:hover {
+        background-color: #19376d;
+      }
+
+      main {
+        padding: 2rem;
+        max-width: 900px;
+        margin: auto;
+      }
+
+      .card {
+        background: white;
+        border-radius: 12px;
+        padding: 1rem;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 2rem;
+        text-align: center;
+      }
+
+      .card h2 {
+        margin-bottom: 1rem;
+      }
+
+      footer {
+        text-align: center;
+        font-size: 0.85rem;
+        color: #666;
+        margin-top: 2rem;
+        padding-bottom: 1rem;
+      }
+
+      #modal {
+        display: none;
+        position: fixed;
+        top: 10%;
+        left: 20%;
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        width: 60%;
+        z-index: 1000;
+      }
+
+      #closeModal {
+        cursor: pointer;
+        float: right;
+        font-size: 1.2rem;
+      }
+
+      #treeContainer {
+        margin-top: 2rem;
+        height: 400px;
+      }
+
+      @media (max-width: 600px) {
+        header h1 {
+          font-size: 1.8rem;
+        }
+        #searchInput {
+          width: 100%;
+        }
+        #modal {
+          left: 5%;
+          width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Oilaviy Vikipediya</h1>
+      <form id="searchForm">
+        <input type="text" id="searchInput" placeholder="Ismni kiriting..." />
+        <button type="submit">Qidirish</button>
+        <a href="admin.html" class="admin-link">⚙️ Admin Panel</a>
+      </form>
+    </header>
+
+    <a href="asosi2.html">
+      <button
+        style="
+          padding: 8px 16px;
+          background-color: #0066cc;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        "
+      >
+        🏠 Asosiy sahifaga o'tish
+      </button>
+    </a>
+
+    <main>
+      <div class="card">
+        <h2>Saytga Xush Kelibsiz!</h2>
+        <p>
+          Bu sayt orqali oilangiz a'zolari haqida ma'lumot topishingiz mumkin.
+          Yuqoridagi qidiruv oynasiga ism kiriting va tegishli sahifaga o'ting.
+        </p>
+        <p>
+          <mark>
+            "Xammalarini ruhlari shod bo'lsin, bizdan keyingi farzandlarimizga
+            xam shu shajaradan ko'chirib yozib qoldiringlar, chunki
+            farzandlarimiz shu shajarani davomchilaridir. Shu shajarani o'qib
+            quvonib yursinlar avlodlari kim bo'lganini bilib."
+          </mark>
+        </p>
+        <p>Mirabbos tomonidan 10 dekabr 2000 yil yozilgan</p>
+      </div>
+
+      <div id="treeContainer"></div>
+    </main>
+
+    <div id="modal">
+      <span id="closeModal">❌</span>
+      <div id="modalContent"></div>
+    </div>
+
+    <footer>
+      <p>
+        &copy; 2025 Mirsaid tomonidan yaratilgan oilaviy vikipediya loyihasi.
+      </p>
+    </footer>
+
+    <script>
+      document
+        .getElementById("searchForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const name = document
+            .getElementById("searchInput")
+            .value.trim()
+            .toLowerCase();
+          if (name) {
+            fetch(name + ".html")
+              .then((res) => res.text())
+              .then((data) => {
+                document.getElementById("modalContent").innerHTML = data;
+                document.getElementById("modal").style.display = "block";
+              })
+              .catch(() => alert("Topilmadi!"));
+          }
+        });
+
+      document.getElementById("closeModal").onclick = function () {
+        document.getElementById("modal").style.display = "none";
+      };
+
+      const family = new FamilyTree(document.getElementById("treeContainer"), {
+        nodeBinding: {
+          field_0: "name",
+          img_0: "img",
+        },
+        nodes: [
+          { id: 1, name: "Mirabbos", img: "mirabbos.jpg" },
+          { id: 2, pid: 1, name: "Mirjalil" },
+          { id: 3, pid: 2, name: "Mirabbosjon" },
+          { id: 4, pid: 3, name: "Mirsaid" },
+        ],
+      });
+    </script>
+  </body>
+</html>
+ -->

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Kirish - Oilaviy Vikipediya</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="login-body">
+    <div class="login-container">
+      <h2>Oilaviy Vikipediyaga kirish</h2>
+      <form id="loginForm">
+        <input type="text" id="name" placeholder="Ism" required />
+        <input type="text" id="surname" placeholder="Familya" required />
+        <input type="number" id="age" placeholder="Yosh" required />
+        <select id="role" required>
+          <option value="">Rolni tanlang</option>
+          <option value="Fuqaro">Fuqaro</option>
+          <option value="Admin">Admin</option>
+        </select>
+        <button type="submit">Kirish</button>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const user = {
+            name: document.getElementById("name").value.trim(),
+            surname: document.getElementById("surname").value.trim(),
+            age: document.getElementById("age").value,
+            role: document.getElementById("role").value,
+          };
+          localStorage.setItem("user", JSON.stringify(user));
+          window.location.href = "asosi2.html";
+        });
+    </script>
+  </body>
+</html>
